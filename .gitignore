@@ -40,3 +40,5 @@ packages/cv/build/
 packages/cv/*.egg-info/
 build/_wheels/
 build/vercel-repro/
+
+.vercel
