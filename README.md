@@ -26,7 +26,7 @@ recalage, et la plateforme elle-même.
 - API : FastAPI, SQLAlchemy, SQLite en développement (PostgreSQL possible), tâches de fond et SSE.
 - Traitement : package Python `lumen_cv` (OpenCV, scikit-image, scikit-learn, ONNX Runtime), sans dépendance web.
 - Modèles : deux U-Net convertis en ONNX, conversion vérifiée numériquement à 4e-6 près.
-- Déploiement : web sur Vercel, API sur Hugging Face Spaces (ou Render), ou tout en Docker sur une machine unique. Détail dans `docs/DEPLOY.md`.
+- Déploiement : web sur Vercel, API sur Render (ou en Docker), détail dans `docs/DEPLOY.md`.
 
 ## Démarrage rapide
 
@@ -75,15 +75,15 @@ DESIGN.md           système visuel
 
 ## Déploiement
 
-### API sur Hugging Face Spaces (recommandé, sans carte)
+### API sur Render (plan gratuit, sans carte)
 
-1. Créer un Space `lumen-api` avec le SDK Docker, matériel CPU basic, visibilité publique.
-2. `python infra/hf-space/assemble.py` prépare le contenu (code, package `lumen_cv`, modèles ONNX).
-3. Pousser `infra/hf-space/build` sur le dépôt du Space ; l'image écoute sur le port 7860.
-4. Vérifier `/api/health` sur l'URL du Space.
+1. Compte GitHub, puis `New` et `Blueprint` sur render.com, choisir ce dépôt.
+2. `render.yaml` décrit le service : Docker depuis `apps/api/Dockerfile`, santé sur `/api/health`.
+3. Vérifier `/api/health` sur l'URL fournie. Disque éphémère, réveil au premier appel après une pause.
 
-Alternative sans carte également : Render, avec le blueprint `render.yaml` fourni (plan gratuit, disque
-éphémère). Les deux s'arrêtent après une période d'inactivité et se réveillent au premier appel.
+Railway (inscriptions fermées) et Hugging Face Spaces (Spaces Docker payants sur matériel gratuit) sont
+écartés. Sans hébergeur, un tunnel local (`cloudflared`) donne une URL publique temporaire : voir
+`docs/DEPLOY.md`.
 
 ### Web sur Vercel
 

@@ -23,6 +23,9 @@ RUN pip install --no-deps /app/packages/cv
 COPY apps/api /app/apps/api
 COPY models/unet_endoscopie.onnx models/unet_busi.onnx models/model_info.json /app/models/
 
+# Echec immediat si une dependance binaire ne se charge pas dans l'image.
+RUN python -c "import cv2, numpy, onnxruntime, scipy, sklearn, skimage, PIL; print('imports ok', cv2.__version__, numpy.__version__, onnxruntime.__version__)"
+
 ENV LUMEN_STORAGE_DIR=/data/storage \
     LUMEN_DATABASE_URL=sqlite:////data/lumen.db \
     LUMEN_MODELS_DIR=/app/models \

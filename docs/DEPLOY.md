@@ -1,76 +1,48 @@
 # Mise en ligne
 
-Trois chemins possibles pour rendre la plateforme accessible. Aucun ne demande de carte bancaire.
+Deux chemins possibles, aucun ne demande de carte bancaire.
 
-| Chemin | API | Interface | Comptes nécessaires |
+| Chemin | API | Interface | Comptes |
 |---|---|---|---|
-| A. Recommandé | Hugging Face Space (Docker) | Vercel | Hugging Face + Vercel |
-| B. Alternative | Render (Blueprint) | Vercel | Render + Vercel |
-| C. Démonstration locale | ta machine | ta machine | aucun |
+| A. Recommandé | Render (Docker, plan gratuit) | Vercel | Render + Vercel |
+| B. Démonstration sans hébergeur | ta machine, exposée par un tunnel | ta machine | aucun |
 
-## Ce qu'il faut me transmettre
+Écartés après essai : Railway (inscriptions fermées) et Hugging Face Spaces (les Spaces Docker sur
+matériel gratuit exigent désormais un abonnement PRO).
 
-| Élément | Pourquoi |
-|---|---|
-| Jeton GitHub en écriture sur `OussemaHarrabi/Lumen` | pousser le code (le dépôt est vide à ce jour) |
-| Jeton Hugging Face en écriture | créer et alimenter le Space de l'API |
-| Jeton Vercel, ou accès au tableau de bord | créer le projet web et poser l'URL de l'API |
-| Domaine, facultatif | URL lisible ; sinon les URL fournies par Vercel et Hugging Face suffisent |
+## A. API sur Render
 
-## A. API sur Hugging Face Spaces (recommandé)
+1. render.com, compte gratuit (connexion GitHub), puis `New` et `Blueprint`.
+2. Choisir le dépôt `OussemaHarrabi/Lumen`. Render lit `render.yaml` : service Docker construit depuis
+   `apps/api/Dockerfile`, contexte à la racine du dépôt, santé sur `/api/health`, plan gratuit.
+3. `Apply`. La première construction prend 5 à 8 minutes (OpenCV, ONNX Runtime, deux modèles).
+4. Noter l'URL `https://lumen-api-xxxx.onrender.com` et vérifier `/api/health` : la réponse doit annoncer
+   `status: ok` et `endoscopie` et `busi` à `true`.
 
-Gratuit, sans carte, 16 Go de mémoire, URL publique immédiate. Le disque étant éphémère, la base et les
-images sont recréées à chaque redémarrage : sans conséquence ici, les exemples sont embarqués et recopiés
-dans la session à la demande.
-
-1. Sur huggingface.co, `New Space`, nom `lumen-api`, **SDK Docker**, matériel CPU basic, visibilité publique.
-2. Le contenu à pousser est déjà assemblé par `python infra/hf-space/assemble.py` dans
-   `infra/hf-space/build/` (90 fichiers, 17 Mo : code de l'API, package `lumen_cv`, deux modèles ONNX).
-3. Pousser ce dossier sur le dépôt du Space :
-
-```bash
-cd infra/hf-space/build
-git init && git add . && git commit -m "API Lumen"
-git remote add space https://huggingface.co/spaces/<compte>/lumen-api
-git push space main
-```
-
-L'authentification se fait avec le jeton Hugging Face comme mot de passe.
-
-4. Le Space construit l'image (3 à 6 minutes) puis expose
-   `https://<compte>-lumen-api.hf.space`. Vérifier `https://<compte>-lumen-api.hf.space/api/health` :
-   la réponse doit annoncer `status: ok` et les deux modèles.
-5. Le premier appel après une période d'inactivité réveille le Space (quelques secondes). Pour une
-   soutenance, ouvrir la page `…/docs` deux minutes avant pour le réveiller.
-
-## B. API sur Render (alternative)
-
-1. render.com, nouveau compte, puis `New` puis `Blueprint`, choisir le dépôt GitHub.
-2. Render lit `render.yaml` : service Docker construit depuis `apps/api/Dockerfile`, santé sur
-   `/api/health`, plan gratuit.
-3. Le plan gratuit s'endort après quinze minutes d'inactivité et ne propose pas de disque : l'API utilise
-   donc `/tmp` pour la base et les fichiers, ce qui suffit pour une démonstration.
-4. Récupérer l'URL `https://lumen-api-xxxx.onrender.com` et la vérifier sur `/api/health`.
+Le plan gratuit dispose de 512 Mo de mémoire : l'API en utilise 180 Mo après une inférence U-Net, la marge
+est suffisante. Le service s'endort après quinze minutes d'inactivité et se réveille au premier appel, en
+30 à 60 secondes. Aucun disque : la base et les fichiers vivent dans `/tmp` et sont recréés au réveil, ce
+qui est sans conséquence puisque les exemples sont embarqués dans l'image.
 
 ## Interface sur Vercel
 
-Identique dans les deux cas.
+1. vercel.com, compte gratuit (connexion GitHub), puis `Add New` et `Project`.
+2. Importer `OussemaHarrabi/Lumen`.
+3. **Root Directory : `apps/web`**. Sans ce réglage, la construction échoue : le dépôt n'est pas une
+   application Next.js à la racine.
+4. Framework détecté : Next.js. Laisser les commandes de construction par défaut.
+5. Variable d'environnement `NEXT_PUBLIC_API_URL` = URL de l'API Render, sans barre oblique finale.
+   Elle est lue à la construction parce que le proxy `/lum-api` est figé dans le build : si l'URL change,
+   relancer un déploiement.
+6. `Deploy`, puis ouvrir l'URL, charger un exemple et lancer une analyse.
 
-1. vercel.com, `Add New` puis `Project`, importer le dépôt `OussemaHarrabi/Lumen`.
-2. **Root Directory : `apps/web`** (le dépôt n'est pas une application à la racine ; sans ce réglage, la
-   construction échoue).
-3. Framework détecté : Next.js. Ne rien changer aux commandes de construction.
-4. Variable d'environnement : `NEXT_PUBLIC_API_URL` = URL publique de l'API, sans barre oblique finale,
-   par exemple `https://oussemaharrabi-lumen-api.hf.space`. Elle est lue au moment de la construction, car
-   le proxy `/lum-api` est figé dans le build : si l'URL change, relancer un déploiement.
-5. Déployer, ouvrir l'URL `https://<projet>.vercel.app`, vérifier `Espace de travail`, charger un exemple
-   et lancer une analyse.
+L'interface passe par `https://<projet>.vercel.app/lum-api/...`, que Vercel relaie vers l'API : le cookie
+de session reste same-origin, le canvas lit les pixels sans restriction, et aucun réglage CORS n'est
+nécessaire.
 
-Le navigateur n'appelle jamais l'API directement : il passe par `https://<projet>.vercel.app/lum-api/...`,
-que Vercel relaie vers l'API. Le cookie de session reste donc same-origin et le canvas peut lire les
-pixels. Aucun réglage CORS n'est nécessaire.
+## B. Démonstration sans hébergeur
 
-## C. Démonstration locale
+Tout tourne sur la machine, le tunnel fournit une URL publique temporaire.
 
 ```bash
 cd lumen
@@ -78,20 +50,27 @@ cd lumen
 cd apps/web && NEXT_PUBLIC_API_URL=http://127.0.0.1:8000 pnpm dev
 ```
 
-Tout reste sur la machine, aucune connexion nécessaire. Pour exposer ponctuellement, un tunnel
-(`cloudflared tunnel --url http://localhost:3000`) donne une URL publique temporaire, à condition de
-rebâtir l'interface avec cette URL comme `NEXT_PUBLIC_API_URL`.
+Puis, dans un troisième terminal, une fois `cloudflared` installé (`winget install Cloudflare.cloudflared`) :
+
+```bash
+cloudflared tunnel --url http://localhost:3000
+```
+
+L'URL `https://<mots>.trycloudflare.com` s'affiche. Elle change à chaque lancement et la machine doit
+rester allumée, mais aucun compte n'est nécessaire. Si l'URL est figée dans un déploiement Vercel, il faut
+rebâtir l'interface avec la nouvelle valeur de `NEXT_PUBLIC_API_URL`.
+
+## C. Variante tout en Docker
+
+`infra/docker-compose.yml` lance l'API et l'interface avec un volume pour la base et les fichiers. Sur une
+machine ou un serveur personnel, ajouter Caddy devant les deux services pour un nom de domaine et HTTPS
+automatique.
 
 ## Vérifications avant la soutenance
 
 - `GET /api/health` annonce les deux modèles.
-- Une analyse sur l'exemple endoscopie donne Dice 0,907 avec le preset Watershed, 0,461 avec k-means,
-  0,959 avec U-Net sur l'exemple du jeu U-Net.
-- Le recalage de la paire FIRE donne 2,87 px d'erreur moyenne et 100 % de réussite à 10 px.
+- Watershed sur l'exemple du cours : Dice 0,907 ; k-means : 0,461 ; U-Net sur son image d'entraînement :
+  0,959.
+- Recalage de la paire FIRE : 2,87 px d'erreur moyenne, 100 % de réussite à 10 px.
 - Un fichier de 26 Mo est refusé avec un message clair.
-- L'interface tient sur un écran de téléphone (390 px), sans débordement.
-
-## Sauvegarde
-
-En mode A et B, le disque est éphémère : rien à sauvegarder, les exemples sont dans l'image. En mode C, la
-base `lumen.db` et le dossier `storage/` restent sur la machine.
+- L'interface tient sur un écran de téléphone (390 px) sans débordement.

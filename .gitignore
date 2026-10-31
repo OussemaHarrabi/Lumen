@@ -33,3 +33,9 @@ lumen.db-shm
 
 # Contenu assemblé pour le Space (regénéré par infra/hf-space/assemble.py)
 infra/hf-space/build/
+
+# Environnement jetable de vérification des dépendances
+.venv-img/
+packages/cv/build/
+packages/cv/*.egg-info/
+build/_wheels/
