@@ -61,6 +61,12 @@ L'URL `https://<mots>.trycloudflare.com` s'affiche. Elle change à chaque lancem
 rester allumée, mais aucun compte n'est nécessaire. Si l'URL est figée dans un déploiement Vercel, il faut
 rebâtir l'interface avec la nouvelle valeur de `NEXT_PUBLIC_API_URL`.
 
+## Variante : interface aussi sur Render
+
+`apps/web/Dockerfile` construit le serveur Next en mode standalone et prend `NEXT_PUBLIC_API_URL`
+en argument de construction, avec l'API déployée comme valeur par défaut. Un second service Render de
+type `web` pointant sur ce Dockerfile suffit, sans passer par Vercel.
+
 ## C. Variante tout en Docker
 
 `infra/docker-compose.yml` lance l'API et l'interface avec un volume pour la base et les fichiers. Sur une
