@@ -18,6 +18,10 @@ export type GlyphName =
   | "chevron-left"
   | "image"
   | "histogram"
+  | "filter"
+  | "segment"
+  | "network"
+  | "register"
   | "plus"
   | "minus"
   | "trash"
@@ -127,6 +131,46 @@ const paths: Record<GlyphName, React.ReactNode> = {
     <>
       <path d="M4.4 19.4h15.2" />
       <path d="M6.6 19.4v-5.2M10.6 19.4V8.2M14.6 19.4v-3.4M18.4 19.4v-7" />
+    </>
+  ),
+  // Bruit du capteur en haut, signal lissé en bas : le prétraitement.
+  filter: (
+    <>
+      <path d="M4.6 16.6c2.1-4 4.2-4 6.3 0s4.2 4 6.3 0" />
+      <circle cx="6.8" cy="8.1" r=".85" />
+      <circle cx="11.4" cy="6.3" r=".85" />
+      <circle cx="16" cy="8.1" r=".85" />
+      <path d="M9.1 10.9l1.9-1.1M12.9 9.8l1.9 1.1" opacity=".55" />
+    </>
+  ),
+  // Contour fermé dans un cadre de sélection : la segmentation.
+  segment: (
+    <>
+      <path
+        d="M12 5.1c2.9 0 5 1.9 5 4.1 0 1.3-.7 2.1-.7 3.2 0 1.2.9 1.8.9 3.1 0 1.3-1.5 2.2-3.2 2.2-1.3 0-1.9-.6-3.2-.6s-1.9.6-3.2.6c-1.7 0-3.2-.9-3.2-2.2 0-1.3.9-1.9.9-3.1 0-1.1-.7-1.9-.7-3.2 0-2.2 2.1-4.1 5.4-4.1Z"
+      />
+      <path d="M3.7 3.7h16.6v16.6H3.7z" strokeDasharray="1.8 2.6" opacity=".5" />
+    </>
+  ),
+  // Trois couches reliées : le réseau convolutif.
+  network: (
+    <>
+      <circle cx="5.4" cy="6.4" r="1.35" />
+      <circle cx="5.4" cy="12" r="1.35" />
+      <circle cx="5.4" cy="17.6" r="1.35" />
+      <circle cx="12" cy="9.2" r="1.35" />
+      <circle cx="12" cy="14.8" r="1.35" />
+      <circle cx="18.6" cy="12" r="1.35" />
+      <path d="M6.7 7.1 10.7 8.7M6.7 11.5l4-1.5M6.7 12.5l4 1.5M6.7 16.9l4-1.4" opacity=".6" />
+      <path d="M13.3 9.9l4 1.4M13.3 14.1l4-1.4" opacity=".6" />
+    </>
+  ),
+  // Deux cadres décalés qui s'alignent : le recalage.
+  register: (
+    <>
+      <path d="M4.4 8.4h9.4v9.4H4.4z" />
+      <path d="M10.2 4.6h9.4v9.4h-9.4z" strokeDasharray="1.8 2.4" opacity=".75" />
+      <path d="M10.9 11.6h3.1M12.45 10.1v3.1" opacity=".85" />
     </>
   ),
   plus: (

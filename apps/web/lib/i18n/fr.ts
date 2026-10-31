@@ -63,6 +63,10 @@ export const fr = {
     lede:
       "Les six séances du module sont reprises sans raccourci : mêmes algorithmes, mêmes paramètres, mêmes images. Ce qui change, c'est la traçabilité.",
     columns: { index: "N°", name: "Module", content: "Contenu", steps: "Étapes" },
+    chain: {
+      caption: "Le trajet d'une image dans la plateforme",
+      steps: ["Image", "Prétraitement", "Contour", "Mesure"],
+    },
     items: [
       {
         id: "lecture",

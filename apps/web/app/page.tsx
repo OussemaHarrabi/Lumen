@@ -1,9 +1,21 @@
 import Link from "next/link";
-import { Glyph } from "@/components/ui/Glyph";
+import { Glyph, type GlyphName } from "@/components/ui/Glyph";
 import { PlateFigure } from "@/components/site/PlateFigure";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { getI18n } from "@/lib/i18n/server";
+
+// Un pictogramme par atelier, et trois pour les temps de la méthode.
+const moduleGlyphs: Record<string, GlyphName> = {
+  lecture: "image",
+  preprocess: "filter",
+  segmentation: "segment",
+  deep: "network",
+  registration: "register",
+  evaluation: "measure",
+};
+const chainGlyphs: GlyphName[] = ["image", "filter", "segment", "measure"];
+const methodGlyphs: GlyphName[] = ["import", "layers", "measure"];
 
 export default async function Home() {
   const { dict } = await getI18n();
@@ -62,6 +74,25 @@ export default async function Home() {
             </p>
           </div>
 
+          <figure className="mt-12 border-t border-rule pt-6">
+            <figcaption className="caption-index">{modules.chain.caption}</figcaption>
+            <ol className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-3">
+              {modules.chain.steps.map((label, index) => (
+                <li key={label} className="flex items-center gap-3">
+                  <span className="flex items-center gap-2">
+                    <span className="grid size-8 shrink-0 place-items-center border border-rule bg-paper-raised text-ink-soft">
+                      <Glyph name={chainGlyphs[index]} size={17} />
+                    </span>
+                    <span className="num text-12 text-ink-soft">{label}</span>
+                  </span>
+                  {index < modules.chain.steps.length - 1 ? (
+                    <Glyph name="arrow-right" size={14} className="text-ink-faint" />
+                  ) : null}
+                </li>
+              ))}
+            </ol>
+          </figure>
+
           <div className="mt-12 border-t border-rule">
             <div className="grid-12 hidden py-2 md:grid" aria-hidden="true">
               <span className="caption-index col-span-1">{modules.columns.index}</span>
@@ -78,16 +109,23 @@ export default async function Home() {
                       {item.index}
                     </span>
                     <div className="col-span-10 md:col-span-4">
-                      <h3 className="display-m text-20 leading-snug underline-offset-4 group-hover:underline group-hover:decoration-rule">
-                        {item.name}
-                      </h3>
-                      <ul className="mt-2.5 flex flex-wrap gap-1.5">
-                        {item.techniques.map((technique) => (
-                          <li key={technique} className="chip">
-                            {technique}
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="flex items-start gap-3.5">
+                        <span className="grid size-10 shrink-0 place-items-center border border-rule bg-paper-raised text-ink-soft transition-colors group-hover:border-rule-strong group-hover:text-signal">
+                          <Glyph name={moduleGlyphs[item.id] ?? "image"} size={21} />
+                        </span>
+                        <div className="min-w-0">
+                          <h3 className="display-m text-20 leading-snug underline-offset-4 group-hover:underline group-hover:decoration-rule">
+                            {item.name}
+                          </h3>
+                          <ul className="mt-2.5 flex flex-wrap gap-1.5">
+                            {item.techniques.map((technique) => (
+                              <li key={technique} className="chip">
+                                {technique}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                     <p className="col-span-12 max-w-[46ch] text-15 leading-relaxed text-ink-soft md:col-span-5">
                       {item.description}
@@ -115,9 +153,12 @@ export default async function Home() {
           </div>
 
           <ol className="mt-12 grid-12 gap-y-12">
-            {method.steps.map((step) => (
+            {method.steps.map((step, index) => (
               <li key={step.index} className="col-span-12 border-t border-rule pt-6 md:col-span-4">
-                <span className="num text-13 text-ink-faint">{step.index}</span>
+                <div className="flex items-center justify-between">
+                  <span className="num text-13 text-ink-faint">{step.index}</span>
+                  <Glyph name={methodGlyphs[index] ?? "measure"} size={24} className="text-ink-soft" />
+                </div>
                 <h3 className="display-m mt-7">{step.title}</h3>
                 <p className="mt-3 max-w-[38ch] text-15 leading-relaxed text-ink-soft">{step.body}</p>
                 <p className="num mt-7 text-12 tracking-wide text-ink-faint">{step.detail}</p>

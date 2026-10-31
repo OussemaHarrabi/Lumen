@@ -65,6 +65,10 @@ export const en: Dictionary = {
     lede:
       "The six sessions are carried over without shortcuts: same algorithms, same parameters, same images. What changes is traceability.",
     columns: { index: "No.", name: "Module", content: "Content", steps: "Steps" },
+    chain: {
+      caption: "How one image travels through the platform",
+      steps: ["Image", "Preprocessing", "Contour", "Measurement"],
+    },
     items: [
       {
         id: "lecture",
