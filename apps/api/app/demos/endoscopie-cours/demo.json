@@ -1,0 +1,25 @@
+{
+  "slug": "endoscopie-cours",
+  "kind": "image",
+  "label": {
+    "fr": "Endoscopie laryngée, glotte annotée",
+    "en": "Laryngeal endoscopy, annotated glottis"
+  },
+  "description": {
+    "fr": "Image du cours (frame 442) avec le contour de la glotte comme masque de référence. Idéale pour le seuillage, k-means, la morphologie et le level-set.",
+    "en": "Course frame 442 with the glottis outline as reference mask. Suited to thresholding, k-means, morphology and level-set."
+  },
+  "parts": [
+    {
+      "name": "image",
+      "file": "image.png",
+      "kind": "image"
+    },
+    {
+      "name": "mask",
+      "file": "mask.png",
+      "kind": "mask"
+    }
+  ],
+  "reference": "mask"
+}

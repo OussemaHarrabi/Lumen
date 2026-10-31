@@ -1,0 +1,25 @@
+{
+  "slug": "mammaire-busi",
+  "kind": "image",
+  "label": {
+    "fr": "Échographie mammaire BUSI, lésion bénigne",
+    "en": "BUSI breast ultrasound, benign lesion"
+  },
+  "description": {
+    "fr": "Échographie mammaire du jeu BUSI avec le masque de la lésion. Pour le modèle BUSI et la comparaison avec les méthodes conventionnelles.",
+    "en": "BUSI breast ultrasound with the lesion mask. For the BUSI model and comparison with conventional methods."
+  },
+  "parts": [
+    {
+      "name": "image",
+      "file": "image.png",
+      "kind": "image"
+    },
+    {
+      "name": "mask",
+      "file": "mask.png",
+      "kind": "mask"
+    }
+  ],
+  "reference": "mask"
+}

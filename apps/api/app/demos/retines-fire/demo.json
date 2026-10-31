@@ -1,0 +1,86 @@
+{
+  "slug": "retines-fire",
+  "kind": "image",
+  "label": {
+    "fr": "Paire de rétines FIRE (A01)",
+    "en": "FIRE retina pair (A01)"
+  },
+  "description": {
+    "fr": "Paire du jeu FIRE avec 10 points de contrôle : image fixe A01_1, image mobile A01_2. Pour la translation, l'affine, l'homographie et le flot optique.",
+    "en": "FIRE pair with 10 control points: fixed image A01_1, moving image A01_2. For translation, affine, homography and optical flow."
+  },
+  "parts": [
+    {
+      "name": "fixed",
+      "file": "fixed.jpg",
+      "kind": "image"
+    },
+    {
+      "name": "moving",
+      "file": "moving.jpg",
+      "kind": "image"
+    }
+  ],
+  "landmarks": [
+    [
+      116.7,
+      306.6,
+      136.4,
+      289.1
+    ],
+    [
+      130.1,
+      667.1,
+      125.5,
+      650.2
+    ],
+    [
+      426.2,
+      873.1,
+      405.5,
+      874.5
+    ],
+    [
+      619.3,
+      122.4,
+      648.1,
+      140.7
+    ],
+    [
+      838.3,
+      672.4,
+      829.2,
+      703.3
+    ],
+    [
+      888.6,
+      386.5,
+      898.8,
+      421.3
+    ],
+    [
+      675.9,
+      397.7,
+      685.4,
+      419.9
+    ],
+    [
+      225.8,
+      429.7,
+      235.6,
+      419.2
+    ],
+    [
+      678.7,
+      495.1,
+      683.6,
+      513.4
+    ],
+    [
+      470.9,
+      621.7,
+      467.0,
+      627.3
+    ]
+  ]
+}

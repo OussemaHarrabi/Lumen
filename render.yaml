@@ -1,0 +1,21 @@
+# Blueprint Render : alternative à Hugging Face Spaces pour l'API Lumen.
+# Le plan gratuit ne propose pas de disque : la base et les fichiers vivent dans /tmp.
+services:
+  - type: web
+    name: lumen-api
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerContext: .
+    dockerfilePath: apps/api/Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: LUMEN_STORAGE_DIR
+        value: /tmp/lumen/storage
+      - key: LUMEN_DATABASE_URL
+        value: sqlite:////tmp/lumen/lumen.db
+      - key: LUMEN_MODELS_DIR
+        value: /app/models
+      - key: LUMEN_CORS_ORIGIN
+        sync: false

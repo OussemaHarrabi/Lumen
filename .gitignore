@@ -1,0 +1,35 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+pnpm-debug.log*
+
+# Données et sorties locales
+data/
+storage/
+models/raw/
+models/convert_out/
+models/kaggle_upload/
+*.h5
+
+# Environnement
+.env
+.env.local
+.DS_Store
+
+# Base locale
+lumen.db
+lumen.db-wal
+lumen.db-shm
+
+# Contenu assemblé pour le Space (regénéré par infra/hf-space/assemble.py)
+infra/hf-space/build/

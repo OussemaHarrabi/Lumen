@@ -1,0 +1,33 @@
+name: lumen
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+    environment:
+      LUMEN_CORS_ORIGIN: http://localhost:3000
+      LUMEN_DATABASE_URL: sqlite:////data/lumen.db
+      LUMEN_STORAGE_DIR: /data/storage
+      LUMEN_MODELS_DIR: /app/models
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - lumen_data:/data
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  lumen_data:

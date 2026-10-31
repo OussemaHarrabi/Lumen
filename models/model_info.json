@@ -1,0 +1,20 @@
+{
+  "busi": {
+    "fichier": "unet_busi.onnx",
+    "octets": 7778809,
+    "entree_keras": "(None, 256, 256, 3)",
+    "entree_onnx": "input",
+    "sortie_onnx": "conv2d_94",
+    "parametres": 1941105,
+    "ecart_max_keras_onnx": 4.172325134277344e-06
+  },
+  "endoscopie": {
+    "fichier": "unet_endoscopie.onnx",
+    "octets": 7778815,
+    "entree_keras": "(None, 256, 256, 3)",
+    "entree_onnx": "input",
+    "sortie_onnx": "conv2d_75",
+    "parametres": 1941105,
+    "ecart_max_keras_onnx": 5.925071633328116e-08
+  }
+}

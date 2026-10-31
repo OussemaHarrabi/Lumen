@@ -1,0 +1,125 @@
+{
+ "presets": [
+  {
+   "id": "otsu",
+   "label_fr": "Seuillage d'Otsu inverse",
+   "dice": 0.086,
+   "iou": 0.045,
+   "recall": 1.0,
+   "precision": 0.045,
+   "total_ms": 30.8,
+   "wall_ms": 341.2,
+   "steps": [
+    [
+     "preprocess.gray",
+     0.3
+    ],
+    [
+     "segment.otsu",
+     1.6
+    ],
+    [
+     "postprocess.open",
+     1.4
+    ],
+    [
+     "postprocess.largest_component",
+     4.4
+    ]
+   ],
+   "image": "endoscopie-cours"
+  },
+  {
+   "id": "kmeans",
+   "label_fr": "k-means 3 classes",
+   "dice": 0.461,
+   "iou": 0.3,
+   "recall": 0.65,
+   "precision": 0.357,
+   "total_ms": 707.1,
+   "wall_ms": 922.3,
+   "steps": [
+    [
+     "segment.kmeans",
+     684.4
+    ],
+    [
+     "postprocess.open",
+     1.5
+    ],
+    [
+     "postprocess.largest_component",
+     4.7
+    ]
+   ],
+   "image": "endoscopie-cours"
+  },
+  {
+   "id": "watershed",
+   "label_fr": "Watershed sur le gradient",
+   "dice": 0.907,
+   "iou": 0.829,
+   "recall": 0.867,
+   "precision": 0.95,
+   "total_ms": 38.6,
+   "wall_ms": 224.3,
+   "steps": [
+    [
+     "preprocess.gray",
+     0.2
+    ],
+    [
+     "segment.watershed",
+     21.6
+    ],
+    [
+     "postprocess.open",
+     1.0
+    ],
+    [
+     "postprocess.largest_component",
+     2.7
+    ]
+   ],
+   "image": "endoscopie-cours"
+  },
+  {
+   "id": "chan-vese",
+   "label_fr": "Contours actifs Chan-Vese",
+   "dice": 0.484,
+   "iou": 0.319,
+   "recall": 0.471,
+   "precision": 0.498,
+   "total_ms": 1803.6,
+   "wall_ms": 1997.6,
+   "steps": [
+    [
+     "segment.chan_vese",
+     1799.9
+    ]
+   ],
+   "image": "endoscopie-cours"
+  },
+  {
+   "id": "unet",
+   "label_fr": "U-Net endoscopie",
+   "dice": 0.959,
+   "iou": 0.921,
+   "recall": 0.963,
+   "precision": 0.955,
+   "total_ms": 76.0,
+   "wall_ms": 166.9,
+   "steps": [
+    [
+     "dl.unet_endoscopie",
+     67.1
+    ],
+    [
+     "postprocess.largest_component",
+     0.8
+    ]
+   ],
+   "image": "endoscopie-unet"
+  }
+ ]
+}

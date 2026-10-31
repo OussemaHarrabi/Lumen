@@ -1,0 +1,18 @@
+{
+  "name": "lumen",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Lumen, plateforme d'analyse d'images medicales",
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm --filter web build",
+    "lint": "pnpm --filter web lint",
+    "types": "pnpm --filter web types",
+    "api:dev": ".venv/Scripts/python.exe -m uvicorn app.main:app --reload --port 8000 --app-dir apps/api",
+    "api:test": ".venv/Scripts/python.exe -m pytest apps/api/tests packages/cv/tests -q",
+    "cv:test": ".venv/Scripts/python.exe -m pytest packages/cv/tests -q",
+    "infra:up": "docker compose -f infra/docker-compose.yml up -d --build",
+    "infra:down": "docker compose -f infra/docker-compose.yml down"
+  },
+  "packageManager": "pnpm@12.10.1"
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "endoscopie-unet",
+  "kind": "image",
+  "label": {
+    "fr": "Endoscopie du jeu U-Net, masque glotte",
+    "en": "Endoscopy U-Net sample, glottis mask"
+  },
+  "description": {
+    "fr": "Image du jeu d'entraînement du modèle U-Net endoscopie avec son masque annoté. Sert à la démonstration de la segmentation profonde (Dice attendu proche de 0,95).",
+    "en": "Sample from the U-Net endoscopy training set with its annotated mask. Used to demonstrate deep segmentation (expected Dice near 0.95)."
+  },
+  "parts": [
+    {
+      "name": "image",
+      "file": "image.png",
+      "kind": "image"
+    },
+    {
+      "name": "mask",
+      "file": "mask.png",
+      "kind": "mask"
+    }
+  ],
+  "reference": "mask"
+}

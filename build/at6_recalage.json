@@ -1,0 +1,108 @@
+{
+ "demo": [
+  {
+   "method": "homography",
+   "mean": 2.87,
+   "success": 1.0,
+   "ncc": 0.937,
+   "mse": 300.6,
+   "nmi": 0.343,
+   "confidence": 0.649,
+   "wall_ms": 936.3,
+   "points": 10,
+   "transform": [
+    [
+     1.0241,
+     0.0672,
+     -44.4929
+    ],
+    [
+     -0.0568,
+     1.0141,
+     20.128
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "method": "affine",
+   "mean": 1.24,
+   "success": 1.0,
+   "ncc": 0.944,
+   "mse": 281.0,
+   "nmi": 0.354,
+   "confidence": 0.64,
+   "wall_ms": 1079.3,
+   "points": 10,
+   "transform": [
+    [
+     0.9991,
+     0.0665,
+     -37.356
+    ],
+    [
+     -0.0654,
+     1.0011,
+     24.4332
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  },
+  {
+   "method": "optical_flow",
+   "mean": 1.33,
+   "success": 1.0,
+   "ncc": 0.945,
+   "mse": 274.4,
+   "nmi": 0.354,
+   "confidence": 0.611,
+   "wall_ms": 891.0,
+   "points": 10,
+   "transform": [
+    [
+     1.0019,
+     0.0687,
+     -39.8219
+    ],
+    [
+     -0.065,
+     1.0015,
+     24.1016
+    ],
+    [
+     0.0,
+     0.0,
+     1.0
+    ]
+   ]
+  }
+ ],
+ "package": [
+  {
+   "method": "homography",
+   "mean_full_res": 3.23,
+   "success": 1.0,
+   "ncc": 0.837
+  },
+  {
+   "method": "affine",
+   "mean_full_res": 4.77,
+   "success": 1.0,
+   "ncc": 0.826
+  },
+  {
+   "method": "optical_flow",
+   "mean_full_res": 4.91,
+   "success": 1.0,
+   "ncc": 0.825
+  }
+ ]
+}
