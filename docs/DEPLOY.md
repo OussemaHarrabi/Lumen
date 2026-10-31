@@ -30,7 +30,8 @@ qui est sans conséquence puisque les exemples sont embarqués dans l'image.
 2. Importer `OussemaHarrabi/Lumen`.
 3. **Root Directory : `apps/web`**. Sans ce réglage, la construction échoue : le dépôt n'est pas une
    application Next.js à la racine.
-4. Framework détecté : Next.js. Laisser les commandes de construction par défaut.
+4. Framework détecté : Next.js. `apps/web/vercel.json` fixe l'installation hors espace de travail pnpm,
+   ce qui évite que Vercel remonte à la racine du dépôt pour chercher un autre verrou.
 5. Variable d'environnement `NEXT_PUBLIC_API_URL` = URL de l'API Render, sans barre oblique finale.
    Elle est lue à la construction parce que le proxy `/lum-api` est figé dans le build : si l'URL change,
    relancer un déploiement.
