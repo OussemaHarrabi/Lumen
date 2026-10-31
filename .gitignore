@@ -39,3 +39,4 @@ infra/hf-space/build/
 packages/cv/build/
 packages/cv/*.egg-info/
 build/_wheels/
+build/vercel-repro/
